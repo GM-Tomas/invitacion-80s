@@ -99,10 +99,12 @@ function DiscoBall() {
 }
 
 // Foto sorpresa: aparece con un rebote cuando entra en pantalla al scrollear.
-function Sorpresa() {
+// Solo observa después del PLAY, así no se "gasta" la animación detrás de la intro.
+function Sorpresa({ active }: { active: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
+    if (!active) return;
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -114,7 +116,7 @@ function Sorpresa() {
     );
     io.observe(ref.current!);
     return () => io.disconnect();
-  }, []);
+  }, [active]);
   return (
     <div ref={ref} className={`reveal neon neon-pink w-full overflow-hidden p-1.5 ${shown ? "in" : ""}`}>
       <Image
@@ -138,6 +140,7 @@ export default function Invitacion({ song }: { song?: string }) {
   const start = () => {
     // play() dentro del toque: los celulares solo dejan arrancar audio así
     audio.current?.play().catch(() => setHasSong(false));
+    window.scrollTo(0, 0); // el celu puede haber restaurado un scroll viejo
     setStarted(true);
     boom();
   };
@@ -234,7 +237,7 @@ export default function Invitacion({ song }: { song?: string }) {
           <p className="ink text-2xl leading-tight">
             Confirmá tu asistencia lo antes posible para tener tu <b className="text-yellow">trago listo</b>. 📼✨
           </p>
-          <Sorpresa />
+          <Sorpresa active={started} />
           <a
             href={RSVP_URL}
             target="_blank"

@@ -191,6 +191,8 @@ a.neon:active { transform: scale(0.97); }
   background: radial-gradient(circle at center, #2a0845 0%, #0b0019 70%);
 }
 .intro.off { opacity: 0; visibility: hidden; }
+/* sin scroll mientras está la intro: la invitación arranca siempre desde "Back to the 80s" */
+html:has(.intro:not(.off)) { overflow: hidden; }
 
 @keyframes drive { to { background-position: center 50px; } }
 @keyframes disco-spin { to { translate: 24px 0; } }
