@@ -1,26 +1,196 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-chrome: var(--font-audiowide);
+  --font-script: var(--font-dafoe);
+  --font-pixel: var(--font-press);
+  --font-lcd: var(--font-vt);
+  --color-pink: #ff2e88;
+  --color-cyan: #00f0ff;
+  --color-yellow: #fff200;
+  --color-purple: #b026ff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: #0b0019;
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-vt), monospace;
+  overflow-x: hidden;
+}
+
+/* ---------- Escenario synthwave (fondo fijo) ---------- */
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(#0b0019 0%, #2a0845 45%, #6b0f5c 58%, #ff2e88 62%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0 0 40% 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 80px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 150px 20px, #00f0ff, transparent),
+    radial-gradient(1px 1px at 60px 150px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 180px 120px, #ff2e88, transparent),
+    radial-gradient(1px 1px at 120px 190px, #fff, transparent);
+  background-size: 200px 200px;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+.sun {
+  position: absolute;
+  left: 50%;
+  bottom: 36%;
+  width: min(78vw, 360px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  filter: drop-shadow(0 0 30px #ff2e88) drop-shadow(0 0 60px #ff8a00);
+}
+.sun::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(#fff200 0%, #ffae00 40%, #ff2e88 80%);
+  mask-image: linear-gradient(
+    #000 52%, transparent 52% 55%, #000 55% 63%, transparent 63% 67%,
+    #000 67% 74%, transparent 74% 79%, #000 79% 85%, transparent 85% 91%, #000 91%
+  );
+}
+
+.floor {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  background: linear-gradient(#1a0033, #05000d);
+  perspective: 180px;
+  perspective-origin: 50% 0;
+  border-top: 2px solid #ff2e88;
+  box-shadow: 0 0 25px 4px #ff2e88;
+}
+.floor::before {
+  content: "";
+  position: absolute;
+  inset: 0 -150% -200%;
+  transform-origin: top;
+  transform: rotateX(60deg);
+  background-image:
+    linear-gradient(#ff2e88 2px, transparent 2px),
+    linear-gradient(90deg, #ff2e88 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-position: center 0;
+  filter: drop-shadow(0 0 4px #ff2e88);
+  animation: drive 0.8s linear infinite;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background: repeating-linear-gradient(transparent 0 2px, rgb(0 0 0 / 0.18) 2px 3px);
+}
+
+/* ---------- Logo ---------- */
+.logo-script {
+  display: block;
+  font-family: var(--font-dafoe);
+  font-size: clamp(3.2rem, 16vw, 4.5rem);
+  line-height: 1;
+  color: #ff2e88;
+  rotate: -8deg;
+  margin-bottom: -0.25em;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 6px #ff2e88, 0 0 18px #ff2e88, 0 0 40px #b026ff;
+  animation: flicker 5s infinite;
+}
+.logo-chrome {
+  display: block;
+  font-family: var(--font-audiowide);
+  font-size: clamp(5rem, 30vw, 9rem);
+  padding-right: 0.1em; /* la itálica se come el "!" */
+  line-height: 1;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  background: linear-gradient(#fff 10%, #9ad7ff 45%, #1b1464 50%, #ff9ff3 54%, #fff 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px #fff;
+  filter: drop-shadow(0 4px 0 #b026ff) drop-shadow(0 0 18px #00f0ff);
+}
+
+/* ---------- Cajas neón ---------- */
+.neon {
+  --c: var(--color-cyan);
+  border: 2px solid var(--c);
+  border-radius: 16px;
+  background: rgb(11 0 25 / 0.78);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 10px var(--c), inset 0 0 14px color-mix(in srgb, var(--c) 35%, transparent);
+}
+.neon-pink { --c: var(--color-pink); }
+.neon-yellow { --c: var(--color-yellow); }
+.neon-purple { --c: var(--color-purple); }
+.glow { color: var(--c); text-shadow: 0 0 8px var(--c); }
+
+a.neon { transition: transform 0.15s; }
+a.neon:active { transform: scale(0.97); }
+
+.led {
+  color: #ff3b3b;
+  text-shadow: 0 0 6px #ff3b3b, 0 0 16px #ff0000;
+}
+
+.sticker {
+  rotate: -4deg;
+  background: #fff200;
+  color: #0b0019;
+  box-shadow: 4px 4px 0 #ff2e88;
+}
+
+.rsvp {
+  background: linear-gradient(90deg, #ff2e88, #b026ff, #00f0ff, #ff2e88);
+  background-size: 200% 100%;
+  box-shadow: 0 0 20px #ff2e88, 0 6px 0 #6b0f5c;
+  animation: shimmer 3s linear infinite, neon-pulse 1.6s ease-in-out infinite;
+}
+.rsvp:active { translate: 0 4px; box-shadow: 0 0 20px #ff2e88, 0 2px 0 #6b0f5c; }
+
+/* contraste de texto sobre el fondo brillante */
+.ink { text-shadow: 2px 2px 0 #0b0019, 0 0 12px #0b0019; }
+
+.blink { animation: blink 1s steps(1) infinite; }
+.spin { animation: disc-spin 2.5s linear infinite; }
+.float { animation: float 3s ease-in-out infinite; }
+
+/* ---------- Intro ---------- */
+.intro {
+  transition: opacity 0.6s, visibility 0.6s;
+  background: radial-gradient(circle at center, #2a0845 0%, #0b0019 70%);
+}
+.intro.off { opacity: 0; visibility: hidden; }
+
+@keyframes drive { to { background-position: center 50px; } }
+@keyframes twinkle { from { opacity: 0.5; } to { opacity: 1; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes disc-spin { to { rotate: 360deg; } }
+@keyframes float { 50% { translate: 0 -8px; } }
+@keyframes shimmer { to { background-position: -200% 0; } }
+@keyframes neon-pulse { 50% { box-shadow: 0 0 40px #ff2e88, 0 6px 0 #6b0f5c; } }
+@keyframes flicker {
+  0%, 18%, 22%, 62%, 64%, 100% { opacity: 1; }
+  20%, 63% { opacity: 0.4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before { animation: none !important; transition: none !important; }
 }

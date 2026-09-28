@@ -1,29 +1,27 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Audiowide, Mr_Dafoe, Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const chrome = Audiowide({ weight: "400", subsets: ["latin"], variable: "--font-audiowide" });
+const script = Mr_Dafoe({ weight: "400", subsets: ["latin"], variable: "--font-dafoe" });
+const pixel = Press_Start_2P({ weight: "400", subsets: ["latin"], variable: "--font-press" });
+const lcd = VT323({ weight: "400", subsets: ["latin"], variable: "--font-vt" });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// Título y descripción son lo que se ve al compartir el link por WhatsApp.
 export const metadata: Metadata = {
-  title: "Invitación Fiesta 80s - Cumpleaños",
-  description: "¡Estás invitado a la mejor fiesta de los 80s! Música, neon y diversión retro.",
+  title: "BACK TO THE 80s! 🪩⚡ ¡Estás invitado!",
+  description: "Viernes 2/10 · 20:30 hs · Olga Cosettini 1170. Prepará los calentadores y el neón.",
 };
+
+export const viewport: Viewport = { themeColor: "#0b0019" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="es"
+      className={`${chrome.variable} ${script.variable} ${pixel.variable} ${lcd.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
