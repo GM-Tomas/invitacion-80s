@@ -9,7 +9,7 @@ const lcd = VT323({ weight: "400", subsets: ["latin"], variable: "--font-vt" });
 
 // Título y descripción son lo que se ve al compartir el link por WhatsApp.
 export const metadata: Metadata = {
-  title: "BACK TO THE 80s! 🪩⚡ ¡Estás invitado!",
+  title: "BACK TO THE 80s! 🪩⚡ El cumple de Nani",
   description: "Viernes 2/10 · 20:30 hs · Olga Cosettini 1170. Prepará los calentadores y el neón.",
 };
 
