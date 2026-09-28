@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import confetti from "canvas-confetti";
 import { CalendarPlus, Clock, Disc3, MapPin, MessageCircle, Navigation, Play, Shirt } from "lucide-react";
 
@@ -94,6 +95,37 @@ function DiscoBall() {
         <path className="sparkle" d={SPARKLE} fill="#00f0ff" style={{ animationDelay: "1.1s" }} />
       </g>
     </svg>
+  );
+}
+
+// Foto sorpresa: aparece con un rebote cuando entra en pantalla al scrollear.
+function Sorpresa() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(ref.current!);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={`reveal neon neon-pink w-full overflow-hidden p-1.5 ${shown ? "in" : ""}`}>
+      <Image
+        src="/sorpresa.webp"
+        alt="Es sorpresa, así que shhh"
+        width={1086}
+        height={1448}
+        sizes="(max-width: 448px) 100vw, 448px"
+        className="rounded-xl"
+      />
+    </div>
   );
 }
 
@@ -202,6 +234,7 @@ export default function Invitacion({ song }: { song?: string }) {
           <p className="ink text-2xl leading-tight">
             Confirmá tu asistencia lo antes posible para tener tu <b className="text-yellow">trago listo</b>. 📼✨
           </p>
+          <Sorpresa />
           <a
             href={RSVP_URL}
             target="_blank"
