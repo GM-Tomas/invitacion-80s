@@ -55,6 +55,48 @@ function Countdown() {
   );
 }
 
+// Bola de boliche en SVG: el emoji 🪩 no existe en muchos celulares/Windows viejos.
+const TILES = ["#e8ecf5", "#8d96ad", "#ff9ff3", "#6b7390", "#ffffff", "#aab3c8", "#9ff8ff", "#7c86a0", "#d7dcea"];
+const SPARKLE = "M0-7 1.6-1.6 7 0 1.6 1.6 0 7-1.6 1.6-7 0-1.6-1.6Z";
+
+function DiscoBall() {
+  return (
+    <svg viewBox="0 0 100 120" className="disco float -mt-8 w-24" aria-hidden>
+      <defs>
+        <pattern id="tiles" width="24" height="24" patternUnits="userSpaceOnUse">
+          <rect width="24" height="24" fill="#1b1464" />
+          {TILES.map((c, i) => (
+            <rect key={i} x={(i % 3) * 8 + 0.5} y={Math.floor(i / 3) * 8 + 0.5} width="7" height="7" fill={c} />
+          ))}
+        </pattern>
+        <radialGradient id="shade" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.8" />
+          <stop offset="0.35" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.8" stopColor="#0b0019" stopOpacity="0.35" />
+          <stop offset="1" stopColor="#0b0019" stopOpacity="0.8" />
+        </radialGradient>
+        <clipPath id="ball">
+          <circle cx="50" cy="72" r="40" />
+        </clipPath>
+      </defs>
+      <line x1="50" y1="0" x2="50" y2="33" stroke="#aab3c8" strokeWidth="2" />
+      <g clipPath="url(#ball)">
+        <rect className="disco-tiles" x="-14" y="32" width="128" height="80" fill="url(#tiles)" />
+        <circle cx="50" cy="72" r="40" fill="url(#shade)" />
+      </g>
+      <g transform="translate(22 50)">
+        <path className="sparkle" d={SPARKLE} fill="#fff" />
+      </g>
+      <g transform="translate(84 98) scale(.8)">
+        <path className="sparkle" d={SPARKLE} fill="#fff200" style={{ animationDelay: "0.6s" }} />
+      </g>
+      <g transform="translate(88 48) scale(.6)">
+        <path className="sparkle" d={SPARKLE} fill="#00f0ff" style={{ animationDelay: "1.1s" }} />
+      </g>
+    </svg>
+  );
+}
+
 export default function Invitacion({ song }: { song?: string }) {
   const audio = useRef<HTMLAudioElement>(null);
   const [started, setStarted] = useState(false);
@@ -97,7 +139,7 @@ export default function Invitacion({ song }: { song?: string }) {
           <span className="logo-script">Back to the</span>
           <span className="logo-chrome">80s!</span>
         </h1>
-        <p className="float -mt-4 text-5xl">🪩⚡</p>
+        <DiscoBall />
 
         <p className="neon neon-purple px-5 py-4 text-2xl leading-tight">
           Prepará los <b className="text-yellow">calentadores</b>, el <b className="text-cyan">neón</b> y tus mejores

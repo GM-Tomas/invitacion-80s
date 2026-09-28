@@ -172,6 +172,10 @@ a.neon:active { transform: scale(0.97); }
 .spin { animation: disc-spin 2.5s linear infinite; }
 .float { animation: float 3s ease-in-out infinite; }
 
+.disco { filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 22px #ff2e88); }
+.disco-tiles { animation: disco-spin 1.2s linear infinite; }
+.sparkle { animation: sparkle 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
 /* ---------- Intro ---------- */
 .intro {
   transition: opacity 0.6s, visibility 0.6s;
@@ -180,6 +184,8 @@ a.neon:active { transform: scale(0.97); }
 .intro.off { opacity: 0; visibility: hidden; }
 
 @keyframes drive { to { background-position: center 50px; } }
+@keyframes disco-spin { to { translate: 24px 0; } }
+@keyframes sparkle { 0%, 100% { opacity: 0; scale: 0.3; } 50% { opacity: 1; scale: 1; } }
 @keyframes twinkle { from { opacity: 0.5; } to { opacity: 1; } }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes disc-spin { to { rotate: 360deg; } }
